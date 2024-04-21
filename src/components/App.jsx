@@ -5,48 +5,30 @@ import './App.css';
 import ContactForm from './ContactForm/ContactForm';
 import SearchBox from './SearchBox/SearchBox';
 import ContactList from './ContactList/ContactList';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from '../redux/contactsSlice';
+import { useEffect } from 'react';
+import { fetchContactsThunk } from '../redux/contactsOps';
 // import contactsData from '../components/contacts.json';
 
 function App() {
-  // const [contactsList, setContacts] = useState(() => {
-  //   const savedContacts = JSON.parse(
-  //     window.localStorage.getItem('contactsList')
-  //   );
-  //   if (savedContacts?.length) {
-  //     return savedContacts;
-  //   }
-  //   return contactsData;
-  // });
-  // const [searchInput, setSearchInput] = useState('');
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   window.localStorage.setItem('contactsList', JSON.stringify(contactsList));
-  // }, [contactsList]);
-
-  // const handleDelete = id => {
-  //   setContacts(prev => prev.filter(item => item.id !== id));
-  // };
-
-  // const addContact = contact => {
-  //   setContacts(prev => [contact, ...prev]);
-  // };
-
-  // const getFilteredData = () => {
-  //   return contactsList.filter(
-  //     item =>
-  //       item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-  //       item.number.includes(searchInput)
-  //   );
-  // };
-
-  // const filteredData = getFilteredData();
+  useEffect(() => {
+    dispatch(fetchContactsThunk());
+  }, [dispatch]);
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm />
       <SearchBox />
-      <ContactList />
+      {contacts.length > 0 ? (
+        <ContactList />
+      ) : (
+        <p className="text">No Data...</p>
+      )}
     </div>
   );
 }

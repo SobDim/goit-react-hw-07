@@ -4,8 +4,8 @@ import s from './Contact.module.css';
 import { useDispatch } from 'react-redux';
 import { deleteContactThunk } from '../../../redux/contactsOps';
 
-const Contact = ({ item }) => {
-  const { name, number, id } = item;
+const Contact = ({ contact }) => {
+  const { name, number, id } = contact;
   const dispatch = useDispatch();
   const handleDelete = () => {
     dispatch(deleteContactThunk(id));
