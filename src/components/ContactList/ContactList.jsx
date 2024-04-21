@@ -22,7 +22,7 @@ const ContactList = () => {
     <>
       {loading && <p>Loading...</p>}
       <ul>
-        {contactFilter.reverse().map(contact => (
+        {contactFilter.map(contact => (
           <Contact key={contact.id} contact={contact} />
         ))}
       </ul>
